@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var dappAddress = "n1oEVWvT76NgVfGwYwJtH1Q3q94V5KHeXSD";
+        var nebulas = require("nebulas"),
+            Account = nebulas.Account,
+            neb = new nebulas.Neb();
+        //neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
+        neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+        window.init = function () {
+            $('#address').valueOf(Account.from);
+        }
+
+        function submit() {
+            var value = "0";
+            var nonce = "0"
+            var gas_price = "1000000"
+            var gas_limit = "2000000"
+            var callFunction = "register";
+            //var callArgs = "[\"" + audio_id + "\"]"; //in the form of ["args"]
+            var callArgs = JSON.stringify({
+                name: $('#name').val()
+            });//JSON.stringify(["493f8ae6eb9a1526287654_0"])
+            console.log(callArgs)
+            var contract = {
+                "function": callFunction,
+                "args": callArgs
+            }
+            //console.log(callArgs)
+            neb.api.call(dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+                //alert('123')
+                alter(resp)
+            }).catch(function (err) {
+                console.log("error:" + err.message)
+            })            
+        }
+    </script>
+</head>
+<body>
+address: <span id="address"></span><br>
+<input id="name" type="text"><br>
+<input id="submit" type="button" value="submit" onclick="submit()"/><br>
+</body>
+</html>

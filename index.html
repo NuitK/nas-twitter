@@ -8,7 +8,7 @@
     <script src=static/lib/nebPay.js></script>
     <script src="static/lib/jquery.min.js"></script>
     <script>
-        var dappAddress = "n1oEVWvT76NgVfGwYwJtH1Q3q94V5KHeXSD";
+        var dappAddress = "n1qWhaZnru51HEE11x3nmjtwF5wXV85nwCG";
         var nebulas = require("nebulas"),
             Account = nebulas.Account,
             neb = new nebulas.Neb();
@@ -18,11 +18,33 @@
             $('#address').valueOf(Account.from);
         }
 
+        function login() {
+            var value = "0";
+            var nonce = "0"
+            var gas_price = "1000000"
+            var gas_limit = "200000"
+            var callFunction = "list_tw";
+            //var callArgs = "[\"" + audio_id + "\"]"; //in the form of ["args"]
+            var callArgs = $('#from').val();//JSON.stringify(["493f8ae6eb9a1526287654_0"])
+            console.log(callArgs)
+            var contract = {
+                "function": callFunction,
+                "args": callArgs
+            }
+            //console.log(callArgs)
+            neb.api.call(dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+                //alert('123')
+                alter(resp)
+            }).catch(function (err) {
+                console.log("error:" + err.message)
+            })
+        }
+
         function submit() {
             var value = "0";
             var nonce = "0"
             var gas_price = "1000000"
-            var gas_limit = "2000000"
+            var gas_limit = "200000"
             var callFunction = "register";
             //var callArgs = "[\"" + audio_id + "\"]"; //in the form of ["args"]
             var callArgs = JSON.stringify({
@@ -47,5 +69,6 @@
 address: <span id="address"></span><br>
 <input id="name" type="text"><br>
 <input id="submit" type="button" value="submit" onclick="submit()"/><br>
+from:<input id="from" type="text"/>
 </body>
 </html>

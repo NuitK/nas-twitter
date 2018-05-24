@@ -19,6 +19,8 @@
         }
 
         function login() {
+
+            var fromAdd = $('#from').val();
             var value = "0";
             var nonce = "0"
             var gas_price = "1000000"
@@ -32,7 +34,7 @@
                 "args": callArgs
             }
             //console.log(callArgs)
-            neb.api.call(dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+            neb.api.call(fromAdd, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
                 //alert('123')
                 alter(resp)
             }).catch(function (err) {
@@ -41,6 +43,7 @@
         }
 
         function submit() {
+            var fromAdd = $('#from').val();
             var value = "0";
             var nonce = "0"
             var gas_price = "1000000"
@@ -56,7 +59,7 @@
                 "args": callArgs
             }
             //console.log(callArgs)
-            neb.api.call(dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+            neb.api.call(fromAdd, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
                 //alert('123')
                 alter(resp)
             }).catch(function (err) {
@@ -69,6 +72,7 @@
 address: <span id="address"></span><br>
 <input id="name" type="text"><br>
 <input id="submit" type="button" value="submit" onclick="submit()"/><br>
-from:<input id="from" type="text"/>
+from:<input id="from" type="text"/><br>
+<input value="login" onclick="login()"/>
 </body>
 </html>

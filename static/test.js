@@ -86,6 +86,15 @@ allAction.prototype = {
     init: function () {
 
     },
+    login: function () {
+        var from = Blockchain.transaction.from;
+        var user = LocalContractStorage.get(from);
+        if (user != null) {
+            return user;
+        } else {
+            throw new Error("Please register!");
+        }
+    },
     register: function (text) {
         var acc = new account(text);
         var from = Blockchain.transaction.from;
